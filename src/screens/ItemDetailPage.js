@@ -71,8 +71,7 @@ const styles = StyleSheet.create({
     },
     switchStyle: {
         aspectRatio: 1,
-        borderColor: 'red'
-
+        borderColor: 'red',
     },
     containerNome: {
         backgroundColor: '#e2f9ff',
