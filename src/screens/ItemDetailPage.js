@@ -17,28 +17,27 @@ export default class ItemDetailPage extends React.Component {
     render() {
         const { eachItem } = this.props.navigation.state.params;
         return (
-            <ScrollView style={styles.containerNome}>
+            <ScrollView style={styles.containerAll}>
                 <Text style={styles.textStyle}> {eachItem.Name} </Text>
-                <View style={styles.containerNumber}>
-                    <Text style={styles.temperature}> 56 </Text>
-                    <Text style={styles.temperature}> 70 </Text>
-                    <Text style={styles.temperature}> 36 </Text>
-                    <Text style={styles.temperature}> 36 </Text>
+                <View style={styles.containerLineNumbers}>
+                    <Text style={styles.numberColumn}> 56 </Text>
+                    <Text style={styles.numberColumn}> 70 </Text>
+                    <Text style={styles.numberColumn}> 36 </Text>
+                    <Text style={styles.numberColumn}> 36 </Text>
                 </View>
-                <View style={styles.containerNumber}>
-                    <Image style={styles.weather} source={require('../images/termo.png')} />
-                    <Text style={[styles.temperature, { textAlign: 'left' }]}> {Temp}°C </Text>
+                <View style={styles.containerLineNumbers}>
+                    <Image style={styles.termoImage} source={require('../images/termo.png')} />
+                    <Text style={[styles.numberColumn, { textAlign: 'left' }]}> {Temp}°C </Text>
                 </View>
-                <View style={[styles.containerNumber, styles.containerHumidity]}>
-                    <ImageBackground source={require('../images/humidity.png')} style={styles.weather2}>
-                        <Text style={[styles.temperature, styles.textCentered]}> {HumidityLevel}% </Text>
+                <View style={[styles.containerHumidity]}>
+                    <ImageBackground style={styles.humidityBox} source={require('../images/humidity.png')}>
+                        <Text style={[styles.numberColumn, styles.textCenteredHumidity]}> {HumidityLevel}% </Text>
                     </ImageBackground>
-
-                    <Text style={styles.temperature} />
-
-                    <View style={{borderColor:'red', borderWidth:5}}>
-                        <Switch style={[styles.box, { transform: [{ scale: 2 }] }]} onValueChange={this.toggleSwitch} value={this.state.switchValue} />
-                        <Text style={styles.textStyle}>{this.state.switchValue ? 'Switch is ON' : 'Switch is OFF'}</Text>
+                    <View style={[styles.humidityBox]} >
+                        <View style={styles.switchbox}>
+                            <Switch onValueChange={this.toggleSwitch} value={this.state.switchValue} />
+                        </View>
+                        <Text style={[styles.switchTextStyle]}>{this.state.switchValue ? 'Connected' : 'Unconnected'}</Text>
                     </View>
                 </View>
             </ScrollView>
@@ -48,64 +47,75 @@ export default class ItemDetailPage extends React.Component {
 
 }
 const styles = StyleSheet.create({
-    textCentered: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        paddingTop: 90,
-        paddingRight: 60,
-        textAlign: 'center',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-    },
-    box: {
-        height: 25,
-        width: 10,
-        borderRadius: 5,
-        backgroundColor: "#61dafb",
-        top: 100,
-        left:100
-    },
-    switchStyle: {
-        aspectRatio: 1,
-        borderColor: 'red',
-    },
-    containerNome: {
+    containerAll: {
         backgroundColor: '#e2f9ff',
     },
-    containerNumber: {
-        paddingTop: 10,
-        flexDirection: 'row'
-    },
-    containerHumidity: {
+    containerLineNumbers: {
+        height: 120,
+        // padding: 10,
         flexDirection: 'row',
-        justifyContent: 'flex-end',
-        borderColor: 'black',
-        // borderWidth:2,
-
-    },
-    temperature: {
-        flex: 1,
-        textAlign: 'right',
-        fontSize: 70,
-        color: '#a53',
-        borderColor: 'green',
-        borderWidth: 2,
+        // borderColor: 'yellow',
+        // borderWidth: 2,
     },
     textStyle: {
         fontSize: 30,
         color: 'red',
+        padding: 10,
+        // borderColor: 'red',
+        // borderWidth: 2,
     },
-    weather: {
+    numberColumn: {
+        flex: 1,
+        textAlign: 'center',
+        fontSize: 60,
+        color: '#151',
+        // borderColor: 'green',
+        // borderWidth: 2,
+    },
+    termoImage: {
         aspectRatio: 1,
-        width: 100,
+        width: 115,
+        // borderColor: 'red',
+        // borderWidth: 2,
     },
-    weather2: {
+    containerHumidity: {
+        flex: 1,
+        paddingTop: 10,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        // borderColor: 'black',
+        // borderWidth: 2,
+    },
+    textCenteredHumidity: {
+        position: 'absolute',
+        top: 95,
+        left: 0,
+        right: 60,
+        bottom: 50,
+        fontSize: 40,
+    },
+    humidityBox: {
         aspectRatio: 1,
         width: 200,
-    }
+        // borderColor: 'red',
+        // borderWidth: 2,
+    },
+    switchbox: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        // borderColor: 'green',
+        // borderWidth: 2,
+    },
+    switchTextStyle: {
+        flex:2,
+        padding: 10,
+        textAlign: 'center',
+        fontSize: 20,
+        color: 'red',
+        // borderColor: 'green',
+        // borderWidth: 2,
+    },
+
 
 })
