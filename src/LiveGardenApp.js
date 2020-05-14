@@ -1,20 +1,24 @@
 import React from 'react';
 import Router from './Router';
 
-// import { Provider } from 'react-redux';
-// import {createStore} from 'redux';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
 
-// import devToolsEnhancer from 'remote-redux-devtools';
+import reduxThunk from 'redux-thunk';
 
-// import rootReducer from './reducers';
+import composeWithDevTools from 'remote-redux-devtools';
 
-// const store = createStore(rootReducer,devToolsEnhancer());
+import rootReducer from './reducers';
 
-const LiveGardenApp = props =>(
-    // <Provider store={store}>
-        <Router/>
-    // </Provider>
-    
+const store = createStore(rootReducer, composeWithDevTools(
+    applyMiddleware(reduxThunk)
+));
+
+const LiveGardenApp = props => (
+    <Provider store={store}>
+        <Router />
+    </Provider>
+
 );
 
 export default LiveGardenApp;

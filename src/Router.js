@@ -11,8 +11,8 @@ import ItemDetailPage from './screens/ItemDetailPage'
 // Cria o sistema de navegação entre as paginas
 const AppNavigator = createStackNavigator(
     {
-        Home,
         Login,
+        Home,
         ItemDetailPage,
 },{
     defaultNavigationOptions:{

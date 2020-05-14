@@ -1,1 +1,1 @@
-export default from './src/LiveGardenApp';
+export default from './src/LiveGardenApp'; 
