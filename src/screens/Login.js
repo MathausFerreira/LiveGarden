@@ -5,9 +5,9 @@ import firebase from 'firebase';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import FormRow from '../components/FormRow';
-import {connect } from 'react-redux'
+import { connect } from 'react-redux'
 
-import {tryLogin} from '../actions';
+import { tryLogin } from '../actions';
 
 import { ReactReduxContext } from 'react-redux';
 
@@ -41,8 +41,8 @@ class Login extends Component {
 
     resetInput = () => {
         this.setState({
-            email:"",
-            password:'',
+            email: "",
+            password: '',
         })
     }
 
@@ -50,9 +50,9 @@ class Login extends Component {
         this.setState({ isloading: true, message: '' });
         const { email, password } = this.state;
 
-        this.props.tryLogin({email, password})
+        this.props.tryLogin({ email, password })
 
-      
+
     }
 
     renderButton() {
@@ -76,7 +76,7 @@ class Login extends Component {
                 return errorCode
         }
     }
-
+    
     renderMessage() {
         const { message } = this.state;
 
@@ -166,4 +166,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default connect(null, {tryLogin})(Login)
+export default connect(null, { tryLogin })(Login)
