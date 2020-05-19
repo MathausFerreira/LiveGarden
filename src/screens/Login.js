@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, View, Text, StyleSheet, TextInput, Button, ActivityIndicator, Alert } from 'react-native';
+import { Image, View, Text, StyleSheet, TextInput, Button, ActivityIndicator } from 'react-native';
 import firebase from 'firebase';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -10,6 +10,8 @@ import { connect } from 'react-redux'
 import { tryLogin } from '../actions';
 
 import { ReactReduxContext } from 'react-redux';
+
+import Home from '../screens/Home';
 
 //cria uma classe filha de component
 class Login extends Component {
@@ -51,7 +53,21 @@ class Login extends Component {
         const { email, password } = this.state;
 
         this.props.tryLogin({ email, password })
-
+            .then(user => {
+                if (user) {
+                    return this.props.navigation.replace('Home');
+                }
+                this.setState({
+                    isloading: false,
+                    message: ''
+                });
+            })
+            .catch(error => {
+                this.setState({
+                    isloading: false,
+                    message: this.getMessageErrorCode(error.code)
+                });
+            });
 
     }
 
@@ -76,7 +92,7 @@ class Login extends Component {
                 return errorCode
         }
     }
-    
+
     renderMessage() {
         const { message } = this.state;
 
