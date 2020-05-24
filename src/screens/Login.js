@@ -35,7 +35,6 @@ class Login extends Component {
             storageBucket: "livegarden-514ff.appspot.com",
             messagingSenderId: "901781537223",
             appId: "1:901781537223:web:b58eaefccf144dab0119e2"
-
         };
         // Initialize Firebase
         firebase.initializeApp(config);
