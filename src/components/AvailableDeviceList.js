@@ -8,14 +8,11 @@ const AvailableDeviceList = props => {
     const { Item, onPressItem } = props;
 
     const items = Item.map(eachItem => {
-        return (<AvailableDevice key={eachItem.key} Name={eachItem.Name} eachItem={eachItem} navigateToDetail={(onPressItem)} />)
+        return (<AvailableDevice key={eachItem.id} Name={eachItem.Name} eachItem={eachItem} navigateToDetail={(onPressItem)} />)
     });
 
     return (
         <ScrollView style={styles.container}>
-            {items}
-            {items}
-            {items}
             {items}
         </ScrollView>
     );

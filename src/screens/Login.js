@@ -119,7 +119,7 @@ class Login extends Component {
                     <Image style={styles.logo} source={require('../images/flower.png')} />
                 </View>
                 <FormRow>
-                    <TextInput style={styles.input} clearButtonMode='always' placeholder='User@mail.com.br' value={this.state.email} onChangeText={value => this.onChangeHandler('email', value)} />
+                    <TextInput style={styles.input} clearButtonMode='always' placeholder='User@mail.com.br' value={this.state.email} onChangeText={value => this.onChangeHandler('email', value)} keyboardType ='email-address'  autoCapitalize='none'/>
                 </FormRow>
                 <FormRow>
                     <TextInput style={styles.input} clearButtonMode='always' placeholder='******' secureTextEntry value={this.state.password} onChangeText={value => this.onChangeHandler('password', value)} />

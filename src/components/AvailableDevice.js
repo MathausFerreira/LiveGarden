@@ -7,13 +7,13 @@ const AvailableDevice = (props) =>{
     return(
         <TouchableOpacity  onPress={()=>{navigateToDetail({eachItem});}}>
             <View style={styles.line} >
-                <Image style ={styles.avatar} source={require('../images/flower.png')}/>
+                <Image style ={styles.avatar} source={{uri: eachItem.img}}/>
                 <Text style = {styles.lineText}> {Name}</Text>
             </View>
         </TouchableOpacity>
     );
 }
-
+//source={require('../images/flower.png')}
 const styles = StyleSheet.create({
     container:{
         padding: 10,
@@ -23,10 +23,12 @@ const styles = StyleSheet.create({
 
     },
     avatar:{
+        width:50,
         aspectRatio:1,
+        resizeMode: 'cover',
         flex: 1,
         marginLeft: 15,
-        borderRadius: 30,
+        borderRadius: 3,
     },
     line:{
         height: 60,
