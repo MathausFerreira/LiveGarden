@@ -8,7 +8,6 @@ import FormRow from '../components/FormRow';
 import { connect } from 'react-redux'
 
 import { tryLogin } from '../actions';
-
 import { ReactReduxContext } from 'react-redux';
 
 import Home from '../screens/Home';
