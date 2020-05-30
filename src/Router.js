@@ -6,12 +6,14 @@ import {createStackNavigator} from 'react-navigation-stack';
 
 import Login from './screens/Login';
 import Home from './screens/Home';
-import ItemDetailPage from './screens/ItemDetailPage'
+import ItemDetailPage from './screens/ItemDetailPage';
+import NewPlantPage from './screens/NewPlantPage';
 
 // Cria o sistema de navegação entre as paginas
 const AppNavigator = createStackNavigator(
     {
         Login,
+        NewPlantPage,
         Home,
         ItemDetailPage,
 },{

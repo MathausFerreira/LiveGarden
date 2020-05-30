@@ -1,18 +1,19 @@
 import firebase from 'firebase';
-import { Alert } from 'react-native';
+export const SET_FIELD = 'SET_FIELD';
 
-export const NEWPLANT = 'NEWPLANT';
+//action 
 
-export const newplat = (field, value) => {
+export const setField = (field, value) => {
     return {
-        type: NEWPLANT,
+        type: SET_FIELD,
         field,
         value
     }
 
 };
 
-export const savePlant = plant => {
+
+export const saveNewPlant = plant => {
     const {currentUser} = firebase.auth();
     firebase
     .database()

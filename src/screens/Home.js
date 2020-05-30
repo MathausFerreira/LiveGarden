@@ -58,7 +58,7 @@ export default class Home extends React.Component {
                         this.props.navigation.navigate('ItemDetailPage', pageParams);
                     }} />
                 </View>
-                    <ActionButton buttonColor="rgba(21,76,60,1)" onPress={() => console.log('clicou')} />
+                    <ActionButton buttonColor="rgba(21,76,60,1)" onPress={() => {this.props.navigation.navigate('NewPlantPage')}} />
             </View>
         )
     };
