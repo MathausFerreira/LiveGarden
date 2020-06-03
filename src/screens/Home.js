@@ -1,67 +1,35 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import AvailableDevice from '../components/AvailableDevice';
 
 import AvailableDeviceList from '../components/AvailableDeviceList';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import series from '../../Series.json';
+import { connect } from 'react-redux';
+import { watchPlants } from '../actions';
 
-let maker = [];
-
-// maker = {series};
-
- maker.push(
-    {
-        "id": 2,
-        "Name": "Ana",
-        "itemID": 1221,
-        "img":
-            "https://m.media-amazon.com/images/M/MV5BNDVkYjU0MzctMWRmZi00NTkxLTgwZWEtOWVhYjZlYjllYmU4XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_.jpg"
-    },
-    {
-        "id": 3,
-        "Name": "Maria",
-        "itemID": 1221,
-        "img":
-            "https://ia.media-imdb.com/images/M/MV5BMTkzNDA0MTg5Ml5BMl5BanBnXkFtZTgwNzM3NzMxODE@._V1_SY1000_CR0,0,674,1000_AL_.jpg"
-    },
-    {
-        "id": 4,
-        "Name": "Artur",
-        "itemID": 1221,
-        "img":
-            "https://images-na.ssl-images-amazon.com/images/M/MV5BMWViMmNmYzEtOTU4My00YjdiLWE5ZDUtOGE2NjMzYTE1MDg3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SY1000_CR0,0,702,1000_AL_.jpg"
-    } 
- );
-
-export default class Home extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            items: []
-        };
-    }
-
+class Home extends React.Component {
     componentDidMount() {
-        this.setState({
-            items: maker
-        });
+        this.props.watchPlants();
     }
 
     render() {
+        const { plantList, navigation } = this.props;
+        if(plantList===null){
+            return <ActivityIndicator/>;
+        }
         return (
             <View>
                 <View>
-                    <AvailableDeviceList Item={this.state.items} onPressItem={pageParams => {
-                        this.props.navigation.navigate('ItemDetailPage', pageParams);
+                    <AvailableDeviceList Item={plantList} onPressItem={pageParams => {
+                        navigation.navigate('ItemDetailPage', pageParams);
                     }} />
                 </View>
-                    <ActionButton buttonColor="rgba(21,76,60,1)" onPress={() => {this.props.navigation.navigate('NewPlantPage')}} />
+                <ActionButton buttonColor="rgba(21,76,60,1)" onPress={() => { navigation.navigate('NewPlantPage') }} />
             </View>
-        )
-    };
+        );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -80,3 +48,19 @@ const styles = StyleSheet.create({
         borderWidth: 10,
     },
 });
+
+const mapStateToProps = state => {
+    const { plantList } = state;
+    if (plantList === null) {
+        return { plantList }
+    }
+
+    const keys = Object.keys(plantList);
+    const plantsWithKeys = keys.map(id => {
+        return { ...plantList[id], id }
+    })
+    return { plantList: plantsWithKeys };
+}
+
+
+export default connect(mapStateToProps, { watchPlants })(Home);

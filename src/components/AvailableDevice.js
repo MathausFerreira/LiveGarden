@@ -7,7 +7,9 @@ const AvailableDevice = (props) =>{
     return(
         <TouchableOpacity  onPress={()=>{navigateToDetail({eachItem});}}>
             <View style={styles.line} >
-                <Image style ={styles.avatar} source={{uri: eachItem.img}}/>
+            {eachItem.img 
+            ?<Image style ={styles.avatar} source={{uri: eachItem.img}}/>
+            : null}
                 <Text style = {styles.lineText}> {Name}</Text>
             </View>
         </TouchableOpacity>

@@ -12,18 +12,18 @@ export const setField = (field, value) => {
 
 };
 
+export const PLANT_SAVED_SUCCESS = 'PLANT_SAVED_SUCCESS';
+const plantSavedSuccess = () =>({
+    type: PLANT_SAVED_SUCCESS
+});
 
 export const saveNewPlant = plant => {
-    const {currentUser} = firebase.auth();
-    firebase
-    .database()
-    .ref(`users/${currentUser.uid}/Plant`)
-    .push(plant)
-    .then(()=>{
-        console.log('ta no firebase');
-    })
-    .catch()
-
-    console.log("Estou aqui again", plant);
-
+    const { currentUser } = firebase.auth();
+    return async dispatch => {
+         await firebase
+            .database()
+            .ref(`users/${currentUser.uid}/Plant`)
+            .push(plant);
+        dispatch(plantSavedSuccess())
+    }
 }

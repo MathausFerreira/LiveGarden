@@ -8,7 +8,7 @@ const AvailableDeviceList = props => {
     const { Item, onPressItem } = props;
 
     const items = Item.map(eachItem => {
-        return (<AvailableDevice key={eachItem.id} Name={eachItem.Name} eachItem={eachItem} navigateToDetail={(onPressItem)} />)
+        return (<AvailableDevice key={eachItem.Name} Name={eachItem.Name} eachItem={eachItem} navigateToDetail={(onPressItem)} />)
     });
 
     return (
