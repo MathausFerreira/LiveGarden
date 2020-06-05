@@ -1,6 +1,7 @@
-import { SET_FIELD, PLANT_SAVED_SUCCESS } from '../actions';
+import { SET_FIELD, PLANT_SAVED_SUCCESS, SET_WHOLE_PLANT, RESET_FORM } from '../actions';
 
 const INITIAL_STATE = {
+    id:null,
     Name: '',
     Age: '',
     Species: '',
@@ -21,11 +22,13 @@ export default function (state = INITIAL_STATE, action) {
             newState[action.field] = action.value;
             return newState;
 
+        case SET_WHOLE_PLANT:
+            return action.plant;
+
+        case RESET_FORM:
         case PLANT_SAVED_SUCCESS:
             return INITIAL_STATE;
 
-        // case CLEAR_NEWPLANT_STATE:
-        //     return INITIAL_STATE;
 
         default:
             return state;

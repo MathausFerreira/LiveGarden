@@ -1,11 +1,14 @@
 import React from 'react';
 
-import { View, Text, Image, StyleSheet, ImageBackground, Switch } from 'react-native';
+import { View, Text, Image, StyleSheet, ImageBackground, Switch, Button } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+
+import {connect} from 'react-redux';
+import {deletePlant } from '../actions';
 
 let Temp = 20;
 let HumidityLevel = 100;
-export default class ItemDetailPage extends React.Component {
+class ItemDetailPage extends React.Component {
     //Initial state false for the switch. You can change it to true just to see.
     state = { switchValue: false }
     toggleSwitch = (value) => {
@@ -15,7 +18,9 @@ export default class ItemDetailPage extends React.Component {
         //which will result in re-render the text
     }
     render() {
-        const { eachItem } = this.props.navigation.state.params;
+        const {navigation} = this.props;
+        const { eachItem } = navigation.state.params;
+
         return (
             <ScrollView style={styles.containerAll}>
                 <Text style={styles.textStyle}> {eachItem.Name} </Text>
@@ -40,6 +45,23 @@ export default class ItemDetailPage extends React.Component {
                         <Text style={[styles.switchTextStyle]}>{this.state.switchValue ? 'Connected' : 'Unconnected'}</Text>
                     </View>
                 </View>
+                <View style = {styles.button}>
+                    <Button title="Editar" 
+                    onPress={() =>{
+                        navigation.replace('NewPlantPage',{plantToEdit: eachItem})
+                    }}/>
+                </View>
+                <View style = {styles.button}>
+                    <Button title="Deletar" 
+                    color="#ff0000"
+                    onPress={async () =>{
+                        const hasDeleted = await this.props.deletePlant(eachItem);
+
+                        if(hasDeleted){
+                            navigation.goBack();
+                        }
+                    }}/>
+                </View>
             </ScrollView>
 
         );
@@ -47,6 +69,10 @@ export default class ItemDetailPage extends React.Component {
 
 }
 const styles = StyleSheet.create({
+    button:{
+        padding:10,
+
+    },
     containerAll: {
         backgroundColor: '#e2f9ff',
     },
@@ -108,7 +134,7 @@ const styles = StyleSheet.create({
         // borderWidth: 2,
     },
     switchTextStyle: {
-        flex:2,
+        flex: 2,
         padding: 10,
         textAlign: 'center',
         fontSize: 20,
@@ -119,3 +145,9 @@ const styles = StyleSheet.create({
 
 
 })
+
+// const mapDispatchToProps = {
+//     deletePlant
+// }
+
+export default connect (null, {deletePlant})(ItemDetailPage)

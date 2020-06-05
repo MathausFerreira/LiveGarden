@@ -6,7 +6,7 @@ import FormRow from '../components/FormRow';
 import { connect } from 'react-redux'
 
 
-import { setField, saveNewPlant } from '../actions';
+import { setField, saveNewPlant, setWholePlant, resetForm} from '../actions';
 
 class NewPlantPage extends React.Component {
     constructor(props) {
@@ -16,6 +16,20 @@ class NewPlantPage extends React.Component {
         }
 
     }
+
+    componentDidMount(){
+        const {navigation, setWholePlant, resetForm} = this.props;
+        const {params} = navigation.state;
+
+
+        if(params && params.plantToEdit){
+            setWholePlant(params.plantToEdit);
+        } else{
+            resetForm();
+        }
+
+    }
+
     render() {
         const { newPlant, setField, saveNewPlant, navigation } = this.props;
 
@@ -144,7 +158,9 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
     setField,
-    saveNewPlant
+    saveNewPlant,
+    setWholePlant,
+    resetForm,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPlantPage);
