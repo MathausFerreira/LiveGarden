@@ -1,7 +1,6 @@
 import React from 'react';
 import { ScrollView, Text, StyleSheet, View } from 'react-native';
 
-
 import AvailableDevice from '../components/AvailableDevice';
 
 const AvailableDeviceList = props => {
@@ -17,6 +16,7 @@ const AvailableDeviceList = props => {
         </ScrollView>
     );
 };
+
 
 const styles = StyleSheet.create({
     container: {
