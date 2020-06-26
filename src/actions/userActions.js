@@ -17,7 +17,7 @@ const userLogout = () => ({
 
 export const tryLogin = ({ email, password }) => dispatch => {
 
-    console.log("Estou aqui again");
+    console.log("Tentando Logar");
 
     return firebase
         .auth()
@@ -25,7 +25,7 @@ export const tryLogin = ({ email, password }) => dispatch => {
         .then(user => {
             const action = userLoginSuccess(user);
             dispatch(action);
-            console.log(user);
+            //console.log(user);
             return user;
         })
         .catch(error => {
@@ -45,7 +45,6 @@ export const tryLogin = ({ email, password }) => dispatch => {
                                     .createUserWithEmailAndPassword(email, password)
                                     .then(user => {
                                         resolve(user);
-                                    firstTime = 1;
                                 })
                                     .catch(reject)
                             }

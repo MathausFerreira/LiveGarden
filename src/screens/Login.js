@@ -53,7 +53,7 @@ class Login extends Component {
         this.props.tryLogin({ email, password })
             .then(user => {
                 if (user) {
-                    if (firstTime){
+                    if (user.additionalUserInfo.isNewUser){
                         return this.props.navigation.replace('NewPlantPage');
                     }else
                     {

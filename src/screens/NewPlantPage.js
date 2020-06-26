@@ -99,7 +99,7 @@ class NewPlantPage extends React.Component {
                                     this.setState({ isLoading: true });
                                     try {
                                         await saveNewPlant(newPlant);
-                                        this.props.navigation.navigate('Home');                                        
+                                        this.props.navigation.replace('Home');                                        
                                     } catch (error) {
                                         Alert.alert('Error!', 'error.message');
                                     } finally {
