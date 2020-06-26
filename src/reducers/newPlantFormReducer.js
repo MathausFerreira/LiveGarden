@@ -6,7 +6,7 @@ const INITIAL_STATE = {
     Age: '',
     Species: '',
     Avatar: '',
-    AvatarGender: 'Masculino',
+    AvatarGender: "Masculino",
     Iteration: false,
     IterationFrequency: 0,
     AutoRotate: true,

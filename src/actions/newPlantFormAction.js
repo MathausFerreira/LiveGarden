@@ -1,6 +1,5 @@
 import firebase from 'firebase';
 
-
 export const SET_WHOLE_PLANT = 'SET_WHOLE_PLANT';
 
 export const setWholePlant = plant => ({

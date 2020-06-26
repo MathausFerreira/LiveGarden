@@ -14,7 +14,6 @@ class NewPlantPage extends React.Component {
         this.state = {
             isLoading: false,
         }
-
     }
 
     componentDidMount(){
@@ -100,7 +99,7 @@ class NewPlantPage extends React.Component {
                                     this.setState({ isLoading: true });
                                     try {
                                         await saveNewPlant(newPlant);
-                                        navigation.goBack();
+                                        this.props.navigation.navigate('Home');                                        
                                     } catch (error) {
                                         Alert.alert('Error!', 'error.message');
                                     } finally {

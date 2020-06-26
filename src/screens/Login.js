@@ -53,7 +53,13 @@ class Login extends Component {
         this.props.tryLogin({ email, password })
             .then(user => {
                 if (user) {
-                    return this.props.navigation.replace('Home');
+                    if (firstTime){
+                        return this.props.navigation.replace('NewPlantPage');
+                    }else
+                    {
+                        return this.props.navigation.replace('Home');
+                    }
+                    
                 }
                 this.setState({
                     isloading: false,
@@ -126,11 +132,11 @@ class Login extends Component {
                 </FormRow>
                 {this.renderButton()}
                 {this.renderMessage()}
-                <View style={styles.inline}>
+                {/* <View style={styles.inline}>
                     <Icon name="facebook-official" size={30} color="#3B5699" />
                     <Text style={[styles.buttonBlueText, styles.buttonBigText]}>  Connect </Text>
                     <Text style={styles.buttonBlueText}>with Facebook</Text>
-                </View>
+                </View> */}
             </View>
         )
     }

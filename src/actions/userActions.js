@@ -25,6 +25,7 @@ export const tryLogin = ({ email, password }) => dispatch => {
         .then(user => {
             const action = userLoginSuccess(user);
             dispatch(action);
+            console.log(user);
             return user;
         })
         .catch(error => {
@@ -42,7 +43,10 @@ export const tryLogin = ({ email, password }) => dispatch => {
                                 firebase
                                     .auth()
                                     .createUserWithEmailAndPassword(email, password)
-                                    .then(user => resolve(user))
+                                    .then(user => {
+                                        resolve(user);
+                                    firstTime = 1;
+                                })
                                     .catch(reject)
                             }
                         }],
