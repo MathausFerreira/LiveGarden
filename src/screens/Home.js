@@ -1,10 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
-import AvailableDevice from '../components/AvailableDevice';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
 
 import AvailableDeviceList from '../components/AvailableDeviceList';
 import ActionButton from 'react-native-action-button';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 import { connect } from 'react-redux';
 import { watchPlants } from '../actions';
@@ -56,9 +54,7 @@ const mapStateToProps = state => {
     }
 
     const keys = Object.keys(plantList);
-    const plantsWithKeys = keys.map(id => {
-        return { ...plantList[id], id }
-    })
+    const plantsWithKeys = keys.map(id => {return { ...plantList[id], id } })
     return { plantList: plantsWithKeys };
 }
 

@@ -2,6 +2,7 @@ import { SET_FIELD, PLANT_SAVED_SUCCESS, SET_WHOLE_PLANT, RESET_FORM } from '../
 
 const INITIAL_STATE = {
     id:null,
+    ONOFF:1,
     Name: '',
     Age: '',
     Species: '',
@@ -13,7 +14,6 @@ const INITIAL_STATE = {
     TimeToRotate: '',
     Notes: '',
 }
-
 
 export default function (state = INITIAL_STATE, action) {
     switch (action.type) {
@@ -29,9 +29,7 @@ export default function (state = INITIAL_STATE, action) {
         case PLANT_SAVED_SUCCESS:
             return INITIAL_STATE;
 
-
         default:
             return state;
     }
-
 }

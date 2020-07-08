@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
 import { Image, View, Text, StyleSheet, TextInput, Button, ActivityIndicator } from 'react-native';
 import firebase from 'firebase';
-
-import Icon from 'react-native-vector-icons/FontAwesome';
-
 import FormRow from '../components/FormRow';
 import { connect } from 'react-redux'
-
 import { tryLogin } from '../actions';
-import { ReactReduxContext } from 'react-redux';
 
-import Home from '../screens/Home';
 
 //cria uma classe filha de component
 class Login extends Component {
@@ -99,7 +93,6 @@ class Login extends Component {
 
     renderMessage() {
         const { message } = this.state;
-
         if (!message)
             return null;
 
@@ -108,7 +101,6 @@ class Login extends Component {
                 <Text> {message}</Text>
             </View>
         )
-
     }
 
     onChangeHandler(field, value) {
@@ -116,7 +108,6 @@ class Login extends Component {
             [field]: value
         });
     }
-
 
     render() {
         return (
@@ -132,11 +123,6 @@ class Login extends Component {
                 </FormRow>
                 {this.renderButton()}
                 {this.renderMessage()}
-                {/* <View style={styles.inline}>
-                    <Icon name="facebook-official" size={30} color="#3B5699" />
-                    <Text style={[styles.buttonBlueText, styles.buttonBigText]}>  Connect </Text>
-                    <Text style={styles.buttonBlueText}>with Facebook</Text>
-                </View> */}
             </View>
         )
     }
@@ -158,32 +144,11 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center'
     },
-
     input: {
         paddingLeft: 5,
         paddingRight: 5,
         paddingBottom: 5,
-    },
-
-    transparentButton: {
-        marginTop: 30,
-        borderColor: '#3B5699',
-        borderWidth: 2
-    },
-    buttonBlueText: {
-        fontSize: 16,
-        color: '#3B5699'
-    },
-    buttonBigText: {
-        fontSize: 16,
-        fontWeight: 'bold'
-    },
-    inline: {
-        marginTop: 30,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
+    }
 });
 
 export default connect(null, { tryLogin })(Login)
