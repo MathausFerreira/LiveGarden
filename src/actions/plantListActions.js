@@ -33,37 +33,15 @@ export const watchEachPlants = plant => {
         firebase
             .database()
             .ref(`/users/${currentUser.uid}/Plant/${plant.id}`)
-            .once('value', snapshot => {
-                const plant2 = snapshot.val();
-                const action = setEachPlant(plant2);
+            .on('value', snapshot => {
+                // console.log(snapshot.val());
+                const plants = snapshot.val();
+                const action = setPlants(plants);
                 dispatch(action);
             });
     }
 }
 
-// export const updateONOFF1 = plant=>{
-//     const { currentUser } = firebase.auth();
-//     return dispatch => {
-//         firebase
-//             .database()
-//             .ref(`/users/${currentUser.uid}/Plant/${plant.id}`)
-//             .update({
-//                 ONOFF: 1,
-//             });
-//     }
-// }
-
-// export const updateONOFF0 = plant=>{
-//     const { currentUser } = firebase.auth();
-//     return dispatch => {
-//         firebase
-//             .database()
-//             .ref(`/users/${currentUser.uid}/Plant/${plant.id}`)
-//             .update({
-//                 ONOFF: 0,
-//             });
-//     }
-// }
 
 export const deletePlant = plant => {
     return dispatch => {
@@ -80,13 +58,11 @@ export const deletePlant = plant => {
                     text: 'Sim',
                     onPress: async () => { 
                         const {currentUser} = firebase.auth();
-
                         try{
                             await firebase
                             .database()
                             .ref(`/users/${currentUser.uid}/Plant/${plant.id}`)
                             .remove();
-    
                             resolve(true);
                         } catch(e) {
                             reject(e);

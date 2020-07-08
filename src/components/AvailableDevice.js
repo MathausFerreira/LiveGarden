@@ -3,14 +3,14 @@ import {View, Image, StyleSheet,Text, TouchableOpacity} from 'react-native';
 
 // aqui é construido a cara do componente da lista
 const AvailableDevice = (props) =>{
-    const {eachItem, Name, navigateToDetail} = props;
+    const {eachItem, navigateToDetail} = props;
     return(
         <TouchableOpacity  onPress={()=>{navigateToDetail({eachItem});}}>
             <View style={styles.line} >
             {eachItem.img 
             ?<Image style ={styles.avatar} source={{uri: eachItem.img}}/>
             : null}
-                <Text style = {styles.lineText}> {Name}</Text>
+                <Text style = {styles.lineText}> {eachItem.Name}</Text>
             </View>
         </TouchableOpacity>
     );

@@ -19,6 +19,12 @@ class Login extends Component {
     }
 
     componentDidMount() {
+        
+        this.setState({
+            email: "m@m.com.br",
+            password: "123123"
+        })
+        
         const config = {
             // Configurar o firebase aqui
             apiKey: "AIzaSyAyUw6tK9IFnasvM274uXpNoqSvPyH8WRk",
@@ -47,13 +53,12 @@ class Login extends Component {
         this.props.tryLogin({ email, password })
             .then(user => {
                 if (user) {
-                    if (user.additionalUserInfo.isNewUser){
+                    if (user.additionalUserInfo.isNewUser) {
                         return this.props.navigation.replace('NewPlantPage');
-                    }else
-                    {
+                    } else {
                         return this.props.navigation.replace('Home');
                     }
-                    
+
                 }
                 this.setState({
                     isloading: false,
@@ -116,7 +121,7 @@ class Login extends Component {
                     <Image style={styles.logo} source={require('../images/flower.png')} />
                 </View>
                 <FormRow>
-                    <TextInput style={styles.input} clearButtonMode='always' placeholder='User@mail.com.br' value={this.state.email} onChangeText={value => this.onChangeHandler('email', value)} keyboardType ='email-address'  autoCapitalize='none'/>
+                    <TextInput style={styles.input} clearButtonMode='always' placeholder='User@mail.com.br' value={this.state.email} onChangeText={value => this.onChangeHandler('email', value)} keyboardType='email-address' autoCapitalize='none' />
                 </FormRow>
                 <FormRow>
                     <TextInput style={styles.input} clearButtonMode='always' placeholder='******' secureTextEntry value={this.state.password} onChangeText={value => this.onChangeHandler('password', value)} />
