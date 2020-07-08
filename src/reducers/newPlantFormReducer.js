@@ -2,7 +2,7 @@ import { SET_FIELD, PLANT_SAVED_SUCCESS, SET_WHOLE_PLANT, RESET_FORM, UPDATE_PLA
 
 const INITIAL_STATE = {
     id: null,
-    ONOFF: 0,
+    ONOFF: false,
     Name: '',
     Age: '',
     Species: '',
@@ -17,13 +17,11 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action) {
     switch (action.type) {
-
         case SET_FIELD:
             const newState = { ...state };
             newState[action.field] = action.value;
             return newState;
 
-        // case UPDATE_PLANT_ONOFF:
         case SET_WHOLE_PLANT:
             return action.plant;
 
