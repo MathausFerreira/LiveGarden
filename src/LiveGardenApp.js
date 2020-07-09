@@ -13,7 +13,6 @@ const store = createStore(rootReducer, composeWithDevTools(
     applyMiddleware(reduxThunk)
 ));
 
-
 const LiveGardenApp = props => (
     <Provider store={store}>
         <Router />

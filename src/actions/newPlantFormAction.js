@@ -27,7 +27,7 @@ const plantSavedSuccess = () => ({
 });
 
 export const UPDATE_PLANT_ONOFF = 'UPDATE_PLANT_ONOFF';
-const updatePlantONOFF = plant => ({
+export const updatePlantONOFF = plant => ({
     type: UPDATE_PLANT_ONOFF,
     plant,
 });
@@ -44,43 +44,15 @@ export const saveNewPlant = plant => {
     }
 }
 export const updatePlant = plant => {
-    return dispatch => {
-        //return new Promise((resolve, reject) => {
-
-            console.log(plant.ONOFF);
-
-            if (plant.ONOFF === 1) 
-            {
-                if (plant.id) 
-                {
-                    async () => {
-                        const { currentUser } = firebase.auth();
-                        try {
-                            await firebase.database().ref(`users/${currentUser.uid}/Plant/${plant.id}`).update({ ONOFF: 0 });
-                                console.log('resolve de 1 pra 0');
-                        } catch (e) {
-                            console.log('Reject de 1 pra 0');
-                        }
-                    }
-                }
+    const { currentUser } = firebase.auth();
+    return async dispatch => {
+        if (plant.id) {
+            if (plant.ONOFF == true) {
+                await firebase.database().ref(`users/${currentUser.uid}/Plant/${plant.id}`).update({ ONOFF: false });
             } else {
-                // console.log(plant.id)
-                if (plant.id) {
-                    async () => {
-                        console.log("passou")
-                        const { currentUser } = firebase.auth();
-                        console.log(currentUser)
-                        try {
-                            await firebase.database().ref(`users/${currentUser.uid}/Plant/${plant.id}`).update({ ONOFF: 1 });
-                                console.log('resolve de 0 pra 1');   
-                        } catch (e) {
-                            console.log('Reject de 0 pra 1');
-                        }
-                    }
-                } 
-
+                await firebase.database().ref(`users/${currentUser.uid}/Plant/${plant.id}`).update({ ONOFF: true });
             }
-        //}
-        dispatch(updatePlantONOFF())
+        }
+        dispatch(updatePlantONOFF(plant))
     }
 }

@@ -1,16 +1,11 @@
 import firebase from 'firebase';
 import { Alert } from 'react-native';
+import { setWholePlant } from './newPlantFormAction';
 
 export const SET_PLANTS = 'SET_PLANTS'
 const setPlants = plants => ({
     type: SET_PLANTS,
     plants,
-})
-
-export const SET_EACH_PLANT = 'SET_EACH_PLANT'
-const setEachPlant = plant => ({
-    type: SET_EACH_PLANT,
-    plant,
 })
 
 export const watchPlants = () => {
@@ -27,21 +22,20 @@ export const watchPlants = () => {
     }
 }
 
-export const watchEachPlants = plant => {
+export const watchEachPlant = plant => {
     const { currentUser } = firebase.auth();
     return dispatch => {
         firebase
             .database()
             .ref(`/users/${currentUser.uid}/Plant/${plant.id}`)
             .on('value', snapshot => {
-                // console.log(snapshot.val());
                 const plants = snapshot.val();
-                const action = setPlants(plants);
-                dispatch(action);
+                console.log('Meu snapshot ')
+                console.log(plants)
+                dispatch(setWholePlant(plants));
             });
     }
 }
-
 
 export const deletePlant = plant => {
     return dispatch => {
@@ -72,6 +66,5 @@ export const deletePlant = plant => {
             ], { cancelable: false }
             )
         })
-
     }
 }

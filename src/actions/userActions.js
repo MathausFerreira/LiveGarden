@@ -2,30 +2,23 @@ import firebase from 'firebase';
 import {Alert} from 'react-native';
 
 export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
-
 const userLoginSuccess = user => ({
     type: USER_LOGIN_SUCCESS,
     user
 });
 
 export const USER_LOGOUT = 'USER_LOGOUT';
-
 const userLogout = () => ({
     type: USER_LOGOUT,
-
 });
 
 export const tryLogin = ({ email, password }) => dispatch => {
-
-    console.log("Tentando Logar");
-
     return firebase
         .auth()
         .signInWithEmailAndPassword(email, password)
         .then(user => {
             const action = userLoginSuccess(user);
             dispatch(action);
-            //console.log(user);
             return user;
         })
         .catch(error => {
@@ -54,7 +47,6 @@ export const tryLogin = ({ email, password }) => dispatch => {
                 })
             }
             return Promise.reject(error);
-            // console.log('Usuário não encontrado',error)
         })
 
 }

@@ -4,33 +4,35 @@ import { View, Text, Image, StyleSheet, ImageBackground, Switch, Button } from '
 import { ScrollView } from 'react-native-gesture-handler';
 
 import { connect } from 'react-redux';
-import { deletePlant, updatePlant, watchEachPlants, setField, setWholePlant } from '../actions';
+import { deletePlant, updatePlant, watchEachPlant } from '../actions';
 
 let Temp = 20;
 let HumidityLevel = 100;
 class ItemDetailPage extends React.Component {
 
-    state = { switchValue: false }
+    constructor(props) {
+        super(props);
+        this.state = {
+            switchValue: false,
+            isLoading: false,
+        }
+    }
 
     componentDidMount() {
-        const { navigation, setWholePlant, watchEachPlants } = this.props;
+        const { navigation, watchEachPlant } = this.props;
         const { eachItem } = navigation.state.params;
 
-        setWholePlant(eachItem);
-
-        watchEachPlants(eachItem);
-
+        watchEachPlant(eachItem);
+        this.setState({ switchValue: eachItem.ONOFF }) ;
     }
 
-    toggleSwitch = (value) => {
-        this.setState({ switchValue: value })
+    toggleSwitch = () => {
+        this.props.updatePlant(this.props.newPlant)
+        this.setState({ switchValue: this.props.newPlant.ONOFF })
     }
+
     render() {
-        const { newPlant, setField, navigation } = this.props;
-        // console.log("NEWPLANT")
-        // console.log(newPlant);
-        
-        // this.props.updatePlant(eachItem)
+        const { newPlant, navigation } = this.props;
         return (
             <ScrollView style={styles.containerAll}>
                 <Text style={styles.NameStyle}> {newPlant.Name} </Text>
@@ -44,31 +46,24 @@ class ItemDetailPage extends React.Component {
                     </ImageBackground>
                     <View style={[styles.humidityBox]} >
                         <View style={styles.switchbox}>
-                            <Button title="ON/OFF"
-                                color="#ffaaf0"
-                                onPress={async () => {
-                                       const deu  = await this.props.updatePlant(newPlant);
-
-                                       if(deu){
-                                           console.log("CERTOOO")
-                                       }      
-                                }}/>
-                            {/* <Switch onValueChange={this.toggleSwitch} value={this.state.switchValue}  /> */}
+                        {
+                                this.state.isLoading ?
+                                 <ActivityIndicator />
+                                    : <Switch value={newPlant.ONOFF} onValueChange={this.toggleSwitch} />
+                            }
+                            {/* <Button title="ON/OFF"  color="#ffaaf0" onPress={console.log("CERTOOO")} />
+                            <Switch onValueChange={this.toggleSwitch} value={this.state.switchValue}  /> */}
                         </View>
                         {/* <Text style={[styles.switchTextStyle]}>{this.state.switchValue ? 'Connected' : 'Unconnected'}</Text> */}
                     </View>
                 </View>
-
                 <View style={styles.button}>
-                    <Button title="Editar"
-                        onPress={() => {
+                    <Button title="Editar"  onPress={() => {
                             navigation.replace('NewPlantPage', { plantToEdit: newPlant })
-                        }} />
+                        }}/>
                 </View>
                 <View style={styles.button}>
-                    <Button title="Deletar"
-                        color="#ff0000"
-                        onPress={async () => {
+                    <Button title="Deletar" color="#ff0000" onPress={async () => {
                             const hasDeleted = await this.props.deletePlant(newPlant);
 
                             if (hasDeleted) {
@@ -77,11 +72,10 @@ class ItemDetailPage extends React.Component {
                         }} />
                 </View>
             </ScrollView>
-
         );
     }
-
 }
+
 const styles = StyleSheet.create({
     button: {
         padding: 10,
@@ -179,9 +173,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
     deletePlant,
-    updatePlant,
-    watchEachPlants,
-    setWholePlant
+    watchEachPlant,
+    updatePlant
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemDetailPage)

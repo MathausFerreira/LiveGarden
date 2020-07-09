@@ -16,12 +16,14 @@ const INITIAL_STATE = {
 }
 
 export default function (state = INITIAL_STATE, action) {
+
     switch (action.type) {
         case SET_FIELD:
             const newState = { ...state };
             newState[action.field] = action.value;
             return newState;
-
+            
+        case UPDATE_PLANT_ONOFF:
         case SET_WHOLE_PLANT:
             return action.plant;
 
@@ -32,4 +34,5 @@ export default function (state = INITIAL_STATE, action) {
         default:
             return state;
     }
+
 }

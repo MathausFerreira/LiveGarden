@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { Image, View, Slider, StyleSheet, TextInput, Button, Picker, Text, ScrollView, KeyboardAvoidingView, ActivityIndicator, Alert } from 'react-native';
-import firebase from 'firebase';
 
 import FormRow from '../components/FormRow';
 import { connect } from 'react-redux'
-
 
 import {setField, saveNewPlant, setWholePlant, resetForm} from '../actions';
 
@@ -25,12 +23,10 @@ class NewPlantPage extends React.Component {
         } else{
             resetForm();
         }
-
     }
 
     render() {
         const { newPlant, setField, saveNewPlant, navigation } = this.props;
-
         return (
             <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} >
                 <ScrollView style={styles.container}>
@@ -111,7 +107,6 @@ class NewPlantPage extends React.Component {
                 <View style={{ height: 100 }} />
             </KeyboardAvoidingView>
         );
-
     }
 }
 

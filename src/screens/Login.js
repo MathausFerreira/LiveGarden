@@ -58,7 +58,6 @@ class Login extends Component {
                     } else {
                         return this.props.navigation.replace('Home');
                     }
-
                 }
                 this.setState({
                     isloading: false,
@@ -71,7 +70,6 @@ class Login extends Component {
                     message: this.getMessageErrorCode(error.code)
                 });
             });
-
     }
 
     renderButton() {

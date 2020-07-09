@@ -1,6 +1,7 @@
 // import seriesMock from '../../Series.json'
-import { SET_PLANTS, SET_EACH_PLANT } from '../actions';
+import { SET_PLANTS } from '../actions';
 
+// trata cada campo do formulario e n~çao meu objeto da store
 const INITIAL_STATE = null;
 
 export default function(state = INITIAL_STATE, action) {
@@ -9,8 +10,6 @@ export default function(state = INITIAL_STATE, action) {
                 case SET_PLANTS:
                         return action.plants;
 
-                case SET_EACH_PLANT:
-                        return action.plant;
                 default:
                         return state;
         }

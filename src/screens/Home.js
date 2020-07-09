@@ -58,5 +58,4 @@ const mapStateToProps = state => {
     return { plantList: plantsWithKeys };
 }
 
-
 export default connect(mapStateToProps, { watchPlants })(Home);
