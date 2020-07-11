@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, ActivityIndicator,Button } from 'react-native';
 
 import AvailableDeviceList from '../components/AvailableDeviceList';
 import ActionButton from 'react-native-action-button';
@@ -24,7 +24,7 @@ class Home extends React.Component {
                         navigation.navigate('ItemDetailPage', pageParams);
                     }} />
                 </View>
-                <ActionButton buttonColor="rgba(21,76,60,1)" onPress={() => { navigation.navigate('NewPlantPage') }} />
+                <Button title="Nova Planta" color="#5A9" onPress={() => { navigation.navigate('NewPlantPage') }} />
             </View>
         );
     }

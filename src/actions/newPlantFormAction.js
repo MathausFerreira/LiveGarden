@@ -47,10 +47,10 @@ export const updatePlant = plant => {
     const { currentUser } = firebase.auth();
     return async dispatch => {
         if (plant.id) {
-            if (plant.ONOFF == true) {
-                await firebase.database().ref(`users/${currentUser.uid}/Plant/${plant.id}`).update({ ONOFF: false });
+            if (plant.Actuators.Light == true) {
+                await firebase.database().ref(`users/${currentUser.uid}/Plant/${plant.id}/Actuators`).update({ Light: false });
             } else {
-                await firebase.database().ref(`users/${currentUser.uid}/Plant/${plant.id}`).update({ ONOFF: true });
+                await firebase.database().ref(`users/${currentUser.uid}/Plant/${plant.id}/Actuators`).update({ Light: true });
             }
         }
         dispatch(updatePlantONOFF(plant))

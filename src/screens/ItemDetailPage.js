@@ -6,8 +6,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import { deletePlant, updatePlant, watchEachPlant } from '../actions';
 
-let Temp = 20;
-let HumidityLevel = 100;
 class ItemDetailPage extends React.Component {
 
     constructor(props) {
@@ -23,60 +21,84 @@ class ItemDetailPage extends React.Component {
         const { eachItem } = navigation.state.params;
 
         watchEachPlant(eachItem);
-        this.setState({ switchValue: eachItem.ONOFF }) ;
+        this.setState({ switchValue: eachItem.ONOFF });
     }
 
     toggleSwitch = () => {
         this.props.updatePlant(this.props.newPlant)
-        this.setState({ switchValue: this.props.newPlant.ONOFF })
+        this.setState({ switchValue: this.props.newPlant.Actuators.Light })
     }
 
     render() {
         const { newPlant, navigation } = this.props;
+        console.log('NewPlant')
+        console.log(newPlant)
         return (
-            <ScrollView style={styles.containerAll}>
-                <Text style={styles.NameStyle}> {newPlant.Name} </Text>
-                <View style={styles.containerLineNumbers}>
-                    <Image style={styles.termoImage} source={require('../images/termo.png')} />
-                    <Text style={[styles.numberColumn, { textAlign: 'left' }]}> {Temp}°C </Text>
-                </View>
-                <View style={[styles.containerHumidity]}>
-                    <ImageBackground style={styles.humidityBox} source={require('../images/humidity.png')}>
-                        <Text style={[styles.numberColumn, styles.textCenteredHumidity]}> {HumidityLevel}% </Text>
-                    </ImageBackground>
-                    <View style={[styles.humidityBox]} >
-                        <View style={styles.switchbox}>
-                        {
-                                this.state.isLoading ?
-                                 <ActivityIndicator />
-                                    : <Switch value={newPlant.ONOFF} onValueChange={this.toggleSwitch} />
-                            }
-                            {/* <Button title="ON/OFF"  color="#ffaaf0" onPress={console.log("CERTOOO")} />
-                            <Switch onValueChange={this.toggleSwitch} value={this.state.switchValue}  /> */}
-                        </View>
-                        {/* <Text style={[styles.switchTextStyle]}>{this.state.switchValue ? 'Connected' : 'Unconnected'}</Text> */}
+            <ScrollView style={[styles.containerAll, styles.border]}>
+                <Text style={[styles.NameStyle, styles.border2]}> {newPlant.Name} </Text>
+                <View style={[styles.containerLineNumbers, styles.border2]}>
+                    <Image style={[styles.termoImage, styles.border]} source={require('../images/termo.png')} />
+                    <View style={[{flexDirection: 'column'},{flex:2}]}>  
+                    <Text style={[styles.textStyle, {textAlign: 'left'}, styles.border]}> Temperatura</Text>
+                    <Text style={[styles.numberColumn, {textAlign: 'left'}, styles.border]}> {newPlant.Sensors.Temperature}°C </Text>
+
                     </View>
                 </View>
+                <View style={[styles.containerHumidity, styles.border2]}>
+                    <ImageBackground style={[styles.humidityBox, styles.border]} source={require('../images/humidity.png')}>
+                        <Text style={[styles.numberColumn, styles.textCenteredHumidity, styles.border]}> {newPlant.Sensors.Humidity}% </Text>
+                    </ImageBackground>
+                        <View style={[ styles.border,{flexDirection: 'column'},{flex:1}]}>
+                        <Text style={[styles.textStyle, {textAlign: 'left'}, styles.border]}> Luz</Text>
+                            {this.state.isLoading ?
+                                <ActivityIndicator />
+                                : <Switch style={styles.border} value={newPlant.Actuators.Light} onValueChange={this.toggleSwitch} />
+                            }
+                             <Text style={[styles.textStyle, {textAlign: 'left'}, styles.border]}> Motor</Text>
+                            {this.state.isLoading ?
+                                <ActivityIndicator />
+                                : <Switch value={newPlant.Actuators.Motor} onValueChange={this.toggleSwitch} />
+                            }
+                             <Text style={[styles.textStyle, {textAlign: 'left'}, styles.border]}> Bomba d'água</Text>
+                            {this.state.isLoading ?
+                                <ActivityIndicator />
+                                : <Switch value={newPlant.Actuators.Pump} onValueChange={this.toggleSwitch} />
+                            }
+                    </View>
+                </View>
+                <View style={[styles.containerLineNumbers, styles.border2]}>
+                    <Text style={[styles.textStyle, {textAlign: 'center'},styles.border]}> Luminosidade :  {newPlant.Sensors.Luminosity} % </Text>
+                    <Image style={[styles.termoImage, styles.border]} source={require('../images/brightness.png')} />
+                </View>
                 <View style={styles.button}>
-                    <Button title="Editar"  onPress={() => {
-                            navigation.replace('NewPlantPage', { plantToEdit: newPlant })
-                        }}/>
+                    <Button title="Editar" onPress={() => {
+                        navigation.replace('NewPlantPage', { plantToEdit: newPlant })
+                    }} />
                 </View>
                 <View style={styles.button}>
                     <Button title="Deletar" color="#ff0000" onPress={async () => {
-                            const hasDeleted = await this.props.deletePlant(newPlant);
+                        const hasDeleted = await this.props.deletePlant(newPlant);
 
-                            if (hasDeleted) {
-                                navigation.goBack();
-                            }
-                        }} />
+                        if (hasDeleted) {
+                            navigation.goBack();
+                        }
+                    }} />
                 </View>
             </ScrollView>
         );
     }
 }
 
+
 const styles = StyleSheet.create({
+    border: {
+        // borderColor: 'black',
+        // borderWidth: 2,
+    },
+    border2: {
+        borderColor: '#983',
+        borderWidth: 2,
+    },
     button: {
         padding: 10,
     },
@@ -84,40 +106,29 @@ const styles = StyleSheet.create({
         backgroundColor: '#e2f9ff',
     },
     containerLineNumbers: {
-        // height: 120,
-        // padding: 10,
         flexDirection: 'row',
-        borderColor: 'yellow',
-        borderWidth: 2,
+        alignItems:'center',        
     },
     NameStyle: {
         fontSize: 30,
+        textAlign: 'center',
         color: 'red',
         padding: 10,
-        borderColor: 'red',
-        borderWidth: 2,
     },
     numberColumn: {
         flex: 1,
         textAlign: 'center',
-        fontSize: 60,
+        fontSize: 50,
         color: '#151',
-        borderColor: 'green',
-        borderWidth: 2,
     },
     termoImage: {
         aspectRatio: 1,
         width: 115,
-        borderColor: 'red',
-        borderWidth: 2,
     },
     containerHumidity: {
         flex: 1,
-        paddingTop: 10,
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        borderColor: 'black',
-        borderWidth: 2,
     },
     textCenteredHumidity: {
         position: 'absolute',
@@ -130,40 +141,20 @@ const styles = StyleSheet.create({
     humidityBox: {
         aspectRatio: 1,
         width: 200,
-        borderColor: 'red',
-        borderWidth: 2,
     },
     switchbox: {
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        borderColor: 'black',
-        borderWidth: 2,
-    },
-    switchTextStyle: {
-        flex: 2,
-        padding: 10,
-        textAlign: 'center',
-        fontSize: 20,
-        color: 'red',
-        borderColor: 'red',
-        borderWidth: 2,
     },
     textStyle: {
-        flex: 2,
-        padding: 10,
-        textAlign: 'center',
-        fontSize: 20,
+        justifyContent: "center",
+        flex: 1,
+        fontSize: 25,
         color: 'green',
     },
-    textTitleStyle: {
-        flex: 2,
-        padding: 10,
-        textAlign: 'left',
-        fontSize: 20,
-        color: '#aaa',
-    },
 })
+
 
 function mapStateToProps(state) {
     return {

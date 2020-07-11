@@ -2,17 +2,24 @@ import { SET_FIELD, PLANT_SAVED_SUCCESS, SET_WHOLE_PLANT, RESET_FORM, UPDATE_PLA
 
 const INITIAL_STATE = {
     id: null,
-    ONOFF: false,
     Name: '',
-    Age: '',
     Species: '',
     Avatar: '',
     AvatarGender: "Masculino",
     Iteration: false,
     IterationFrequency: 0,
     AutoRotate: true,
-    TimeToRotate: '',
     Notes: '',
+    Actuators:{
+        Light:false,
+        Motor:false,
+        Pump:false,
+    },
+    Sensors:{
+        Humidity:false,
+        Temperature:false,
+        Luminosity:false,
+    }
 }
 
 export default function (state = INITIAL_STATE, action) {

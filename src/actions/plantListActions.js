@@ -37,6 +37,21 @@ export const watchEachPlant = plant => {
     }
 }
 
+// export const watchEachSensor = plant => {
+//     const { currentUser } = firebase.auth();
+//     return dispatch => {
+//         firebase
+//             .database()
+//             .ref(`/users/${currentUser.uid}/Plant/${plant.id}/Sensors`)
+//             .on('value', snapshot => {
+//                 const plants = snapshot.val();
+//                 console.log('Meu snapshot ')
+//                 console.log(plants)
+//                 dispatch(setWholePlant(plants));
+//             });
+//     }
+// }
+
 export const deletePlant = plant => {
     return dispatch => {
         return new Promise((resolve, reject) => {

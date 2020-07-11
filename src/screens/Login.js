@@ -21,7 +21,7 @@ class Login extends Component {
     componentDidMount() {
         
         this.setState({
-            email: "m@m.com.br",
+            email: "mathaus@hotmail.com",
             password: "123123"
         })
         
