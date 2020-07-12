@@ -1,4 +1,4 @@
-import { SET_FIELD, PLANT_SAVED_SUCCESS, SET_WHOLE_PLANT, RESET_FORM, UPDATE_PLANT_ONOFF } from '../actions';
+import { SET_FIELD, PLANT_SAVED_SUCCESS, SET_WHOLE_PLANT, RESET_FORM,  PLANT_UPDATE_SUCCESS } from '../actions';
 
 const INITIAL_STATE = {
     id: null,
@@ -10,27 +10,29 @@ const INITIAL_STATE = {
     IterationFrequency: 0,
     AutoRotate: true,
     Notes: '',
-    Actuators:{
-        Light:false,
-        Motor:false,
-        Pump:false,
+    Actuators: {
+        Light: false,
+        Motor: false,
+        Pump: false,
     },
-    Sensors:{
-        Humidity:false,
-        Temperature:false,
-        Luminosity:false,
+    Sensors: {
+        Humidity: false,
+        Temperature: false,
+        Luminosity: false,
     }
 }
 
 export default function (state = INITIAL_STATE, action) {
 
     switch (action.type) {
+
+
         case SET_FIELD:
             const newState = { ...state };
             newState[action.field] = action.value;
             return newState;
             
-        case UPDATE_PLANT_ONOFF:
+        case PLANT_UPDATE_SUCCESS:
         case SET_WHOLE_PLANT:
             return action.plant;
 

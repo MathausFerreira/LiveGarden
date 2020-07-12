@@ -4,70 +4,72 @@ import { View, Text, Image, StyleSheet, ImageBackground, Switch, Button } from '
 import { ScrollView } from 'react-native-gesture-handler';
 
 import { connect } from 'react-redux';
-import { deletePlant, updatePlant, watchEachPlant } from '../actions';
+import { deletePlant, updatePlantActuator, watchEachPlant, setField, setWholePlant } from '../actions';
 
 class ItemDetailPage extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            switchValue: false,
             isLoading: false,
         }
     }
 
     componentDidMount() {
-        const { navigation, watchEachPlant } = this.props;
+        const { navigation, watchEachPlant,setWholePlant } = this.props;
         const { eachItem } = navigation.state.params;
-
+        //  console.log('-------------eachItem---------------')
+        //  console.log(eachItem);
         watchEachPlant(eachItem);
-        this.setState({ switchValue: eachItem.ONOFF });
     }
 
     toggleSwitch = () => {
-        this.props.updatePlant(this.props.newPlant)
-        this.setState({ switchValue: this.props.newPlant.Actuators.Light })
+        // this.props.updatePlant(this.props.newPlant)
+        // this.setState({ switchValue: this.props.newPlant.Actuators.Light })
     }
 
     render() {
-        const { newPlant, navigation } = this.props;
-        console.log('NewPlant')
-        console.log(newPlant)
+        const { newPlant, navigation, updatePlantActuator } = this.props;
+          console.log('-------------newPlant---------------')
+           console.log(newPlant)
         return (
             <ScrollView style={[styles.containerAll, styles.border]}>
                 <Text style={[styles.NameStyle, styles.border2]}> {newPlant.Name} </Text>
                 <View style={[styles.containerLineNumbers, styles.border2]}>
                     <Image style={[styles.termoImage, styles.border]} source={require('../images/termo.png')} />
-                    <View style={[{flexDirection: 'column'},{flex:2}]}>  
-                    <Text style={[styles.textStyle, {textAlign: 'left'}, styles.border]}> Temperatura</Text>
-                    <Text style={[styles.numberColumn, {textAlign: 'left'}, styles.border]}> {newPlant.Sensors.Temperature}°C </Text>
-
+                    <View style={[{ flexDirection: 'column' }, { flex: 2 }]}>
+                        <Text style={[styles.textStyle, { textAlign: 'left' }, styles.border]}> Temperatura</Text>
+                        <Text style={[styles.numberColumn, { textAlign: 'left' }, styles.border]}> {newPlant.Sensors.Temperature}°C </Text>
                     </View>
                 </View>
                 <View style={[styles.containerHumidity, styles.border2]}>
                     <ImageBackground style={[styles.humidityBox, styles.border]} source={require('../images/humidity.png')}>
                         <Text style={[styles.numberColumn, styles.textCenteredHumidity, styles.border]}> {newPlant.Sensors.Humidity}% </Text>
                     </ImageBackground>
-                        <View style={[ styles.border,{flexDirection: 'column'},{flex:1}]}>
-                        <Text style={[styles.textStyle, {textAlign: 'left'}, styles.border]}> Luz</Text>
-                            {this.state.isLoading ?
-                                <ActivityIndicator />
-                                : <Switch style={styles.border} value={newPlant.Actuators.Light} onValueChange={this.toggleSwitch} />
-                            }
-                             <Text style={[styles.textStyle, {textAlign: 'left'}, styles.border]}> Motor</Text>
-                            {this.state.isLoading ?
-                                <ActivityIndicator />
-                                : <Switch value={newPlant.Actuators.Motor} onValueChange={this.toggleSwitch} />
-                            }
-                             <Text style={[styles.textStyle, {textAlign: 'left'}, styles.border]}> Bomba d'água</Text>
-                            {this.state.isLoading ?
-                                <ActivityIndicator />
-                                : <Switch value={newPlant.Actuators.Pump} onValueChange={this.toggleSwitch} />
-                            }
+                    <View style={[styles.border, { flexDirection: 'column' }, { flex: 1 }]}>
+                        <Text style={[styles.textStyle, { textAlign: 'left' }, styles.border]}> Luz</Text>
+                        {this.state.isLoading ?
+                            <ActivityIndicator />
+                            : <Switch style={styles.border}
+                                value={newPlant.Actuators.Light}
+                                onValueChange={value => { updatePlantActuator(newPlant, 'Light', value) }} />
+                        }
+                        <Text style={[styles.textStyle, { textAlign: 'left' }, styles.border]}> Motor</Text>
+                        {this.state.isLoading ?
+                            <ActivityIndicator />
+                            : <Switch value={newPlant.Actuators.Motor}
+                             onValueChange={value => { updatePlantActuator(newPlant, 'Motor', value) }} />
+                        }
+                        <Text style={[styles.textStyle, { textAlign: 'left' }, styles.border]}> Bomba d'água</Text>
+                        {this.state.isLoading ?
+                            <ActivityIndicator />
+                            : <Switch value={newPlant.Actuators.Pump} 
+                            onValueChange={value => { updatePlantActuator(newPlant, 'Pump', value) }} />
+                        }
                     </View>
                 </View>
                 <View style={[styles.containerLineNumbers, styles.border2]}>
-                    <Text style={[styles.textStyle, {textAlign: 'center'},styles.border]}> Luminosidade :  {newPlant.Sensors.Luminosity} % </Text>
+                    <Text style={[styles.textStyle, { textAlign: 'center' }, styles.border]}> Luminosidade :  {newPlant.Sensors.Luminosity} % </Text>
                     <Image style={[styles.termoImage, styles.border]} source={require('../images/brightness.png')} />
                 </View>
                 <View style={styles.button}>
@@ -107,7 +109,7 @@ const styles = StyleSheet.create({
     },
     containerLineNumbers: {
         flexDirection: 'row',
-        alignItems:'center',        
+        alignItems: 'center',
     },
     NameStyle: {
         fontSize: 30,
@@ -157,15 +159,43 @@ const styles = StyleSheet.create({
 
 
 function mapStateToProps(state) {
+    // const { newPlant } = state;
+    // if (newPlant === null) {
+    //     return { newPlant }
+    // }
+
+    // const keys = Object.keys(newPlant);
+    // const plantsWithKeys = keys.map(id => {return { ...newPlant[id], id } })
+
+    //  console.log("PLANTA with key -------------------------------------------------------------:")
+    // console.log(plantsWithKeys)
+    // console.log("PLANTA with key -------------------------------------------------------------:")
+
+    // return { newPlant: plantsWithKeys };
+    // const plant = state.newPlant;
+    // const key = Object.keys(plant);
+    // console.log("PLANTA -------------------------------------------------------------:")
+    // console.log(state.newPlant)
+    // console.log("PLANTA -------------------------------------------------------------:")
+    // console.log('Key: ')
+    // console.log(key)
+
+    // const plantWithKey = { ...plant[key], key}
+    // console.log("PLANTA with key -------------------------------------------------------------:")
+    // console.log(plantsWithKeys)
+    // console.log("PLANTA with key -------------------------------------------------------------:")
+
     return {
-        newPlant: state.newPlant
+        newPlant: state.newPlant//plantWithKey//
     }
 }
 
 const mapDispatchToProps = {
     deletePlant,
     watchEachPlant,
-    updatePlant
+    updatePlantActuator,
+    setField,
+    setWholePlant
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemDetailPage)

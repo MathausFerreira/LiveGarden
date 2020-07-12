@@ -5,8 +5,7 @@ export const setWholePlant = plant => ({
     type: SET_WHOLE_PLANT,
     plant,
 });
-
-//action 
+ 
 export const SET_FIELD = 'SET_FIELD';
 export const setField = (field, value) => {
     return {
@@ -22,14 +21,13 @@ export const resetForm = () => ({
 });
 
 export const PLANT_SAVED_SUCCESS = 'PLANT_SAVED_SUCCESS';
-const plantSavedSuccess = () => ({
+export const plantSavedSuccess = () => ({
     type: PLANT_SAVED_SUCCESS
 });
 
-export const UPDATE_PLANT_ONOFF = 'UPDATE_PLANT_ONOFF';
-export const updatePlantONOFF = plant => ({
-    type: UPDATE_PLANT_ONOFF,
-    plant,
+export const PLANT_UPDATE_SUCCESS = 'PLANT_UPDATE_SUCCESS';
+export const updateSuccess = () => ({
+    type: PLANT_UPDATE_SUCCESS,
 });
 
 export const saveNewPlant = plant => {
@@ -43,16 +41,37 @@ export const saveNewPlant = plant => {
         dispatch(plantSavedSuccess())
     }
 }
-export const updatePlant = plant => {
+export const updatePlantActuator = (plant, field, value) => {
+
+    console.log("Atualixando >>>>>>>>>>>>>>>>>>>>>>")
+    console.log(plant)
+    console.log(`Field:     ${field}`)
+    console.log(`value:     ${value}`)
+
     const { currentUser } = firebase.auth();
     return async dispatch => {
         if (plant.id) {
-            if (plant.Actuators.Light == true) {
-                await firebase.database().ref(`users/${currentUser.uid}/Plant/${plant.id}/Actuators`).update({ Light: false });
-            } else {
-                await firebase.database().ref(`users/${currentUser.uid}/Plant/${plant.id}/Actuators`).update({ Light: true });
-            }
+                await firebase.database().ref(`users/${currentUser.uid}/Plant/${plant.id}/Actuators`).update({ [field]: value });
         }
-        dispatch(updatePlantONOFF(plant))
+        dispatch(watchEachPlant(plant))
     }
 }
+
+export const watchEachPlant = (plant) => {
+    const id = plant.id;
+    const { currentUser } = firebase.auth();
+    return dispatch => {
+        firebase
+            .database()
+            .ref(`/users/${currentUser.uid}/Plant/${plant.id}`)
+            .on('value', snapshot => {
+                const plant2 = snapshot.val();
+                let plant3 = {...plant2, [id]: id }
+
+                dispatch(setWholePlant(plant3));
+            });
+    }
+}
+
+// let plant2 = snapshot.val();
+// plant2 = {...plant,...plant2[id], id }
