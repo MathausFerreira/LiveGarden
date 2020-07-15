@@ -2,10 +2,9 @@ import React from 'react';
 import { StyleSheet, View, ActivityIndicator,Button } from 'react-native';
 
 import AvailableDeviceList from '../components/AvailableDeviceList';
-import ActionButton from 'react-native-action-button';
 
 import { connect } from 'react-redux';
-import { watchPlants } from '../actions';
+import { watchPlants, setWholePlant } from '../actions';
 
 class Home extends React.Component {
     componentDidMount() {
@@ -55,7 +54,8 @@ const mapStateToProps = state => {
 
     const keys = Object.keys(plantList);
     const plantsWithKeys = keys.map(id => {return { ...plantList[id], id } })
+    console.log(plantsWithKeys)
     return { plantList: plantsWithKeys };
 }
 
-export default connect(mapStateToProps, { watchPlants })(Home);
+export default connect(mapStateToProps, { watchPlants, setWholePlant })(Home);

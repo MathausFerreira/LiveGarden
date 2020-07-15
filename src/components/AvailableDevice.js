@@ -1,11 +1,13 @@
 import React from 'react';
 import {View, Image, StyleSheet,Text, TouchableOpacity} from 'react-native';
+import { setWholePlant } from '../actions';
+import { connect } from 'react-redux';
 
 // aqui é construido a cara do componente da lista
 const AvailableDevice = (props) =>{
     const {eachItem, navigateToDetail} = props;
     return(
-        <TouchableOpacity  onPress={()=>{navigateToDetail({eachItem});}}>
+        <TouchableOpacity  onPress={()=>{navigateToDetail({eachItem}),setWholePlant(eachItem)}}>
             <View style={styles.line} >
             {eachItem.img 
             ?<Image style ={styles.avatar} source={{uri: eachItem.img}}/>
@@ -47,4 +49,9 @@ const styles = StyleSheet.create({
     },
 });
 
-export default AvailableDevice;
+const mapDispatchToProps={
+setWholePlant,
+}
+
+
+export default connect(null,mapDispatchToProps)(AvailableDevice);

@@ -32,6 +32,8 @@ export const updateSuccess = () => ({
 
 export const saveNewPlant = plant => {
     const { currentUser } = firebase.auth();
+    // console.log("Deletando")
+    // console.log(plant)
     return async dispatch => {
         if (plant.id) {
             await firebase.database().ref(`users/${currentUser.uid}/Plant/${plant.id}`).set(plant);
@@ -42,18 +44,12 @@ export const saveNewPlant = plant => {
     }
 }
 export const updatePlantActuator = (plant, field, value) => {
-
-    console.log("Atualixando >>>>>>>>>>>>>>>>>>>>>>")
-    console.log(plant)
-    console.log(`Field:     ${field}`)
-    console.log(`value:     ${value}`)
-
     const { currentUser } = firebase.auth();
     return async dispatch => {
         if (plant.id) {
                 await firebase.database().ref(`users/${currentUser.uid}/Plant/${plant.id}/Actuators`).update({ [field]: value });
+                dispatch(setWholePlant(plant))
         }
-        dispatch(watchEachPlant(plant))
     }
 }
 
@@ -66,12 +62,16 @@ export const watchEachPlant = (plant) => {
             .ref(`/users/${currentUser.uid}/Plant/${plant.id}`)
             .on('value', snapshot => {
                 const plant2 = snapshot.val();
-                let plant3 = {...plant2, [id]: id }
-
-                dispatch(setWholePlant(plant3));
+                // let plant3 = {...plant2, ['id']: id }
+                dispatch(setWholePlant(addID(plant2,id)));
             });
     }
 }
 
+function addID(plant, id){
+
+    return  {...plant, ['id']: id }
+
+}
 // let plant2 = snapshot.val();
 // plant2 = {...plant,...plant2[id], id }

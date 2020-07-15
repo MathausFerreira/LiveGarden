@@ -16,9 +16,9 @@ const INITIAL_STATE = {
         Pump: false,
     },
     Sensors: {
-        Humidity: false,
-        Temperature: false,
-        Luminosity: false,
+        Humidity: 0,
+        Temperature: 0,
+        Luminosity: 0,
     }
 }
 

@@ -16,22 +16,19 @@ class ItemDetailPage extends React.Component {
     }
 
     componentDidMount() {
-        const { navigation, watchEachPlant,setWholePlant } = this.props;
-        const { eachItem } = navigation.state.params;
-        //  console.log('-------------eachItem---------------')
-        //  console.log(eachItem);
+         const { navigation, watchEachPlant, setWholePlant } = this.props;
+         const { eachItem } = navigation.state.params;
+        // //  console.log('-------------eachItem---------------')
+        // //  console.log(eachItem);
+        setWholePlant(eachItem);
         watchEachPlant(eachItem);
     }
 
-    toggleSwitch = () => {
-        // this.props.updatePlant(this.props.newPlant)
-        // this.setState({ switchValue: this.props.newPlant.Actuators.Light })
-    }
 
     render() {
         const { newPlant, navigation, updatePlantActuator } = this.props;
-          console.log('-------------newPlant---------------')
-           console.log(newPlant)
+        console.log('-------------newPlant---------------')
+         console.log(newPlant)
         return (
             <ScrollView style={[styles.containerAll, styles.border]}>
                 <Text style={[styles.NameStyle, styles.border2]}> {newPlant.Name} </Text>
@@ -167,9 +164,9 @@ function mapStateToProps(state) {
     // const keys = Object.keys(newPlant);
     // const plantsWithKeys = keys.map(id => {return { ...newPlant[id], id } })
 
+    //   console.log("PLANTA with key -------------------------------------------------------------:")
+    //  console.log(state.newplant)
     //  console.log("PLANTA with key -------------------------------------------------------------:")
-    // console.log(plantsWithKeys)
-    // console.log("PLANTA with key -------------------------------------------------------------:")
 
     // return { newPlant: plantsWithKeys };
     // const plant = state.newPlant;

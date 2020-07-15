@@ -1,4 +1,3 @@
-// import seriesMock from '../../Series.json'
 import { SET_PLANTS } from '../actions';
 
 // trata cada campo do formulario e n~çao meu objeto da store
