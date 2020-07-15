@@ -44,11 +44,13 @@ export const saveNewPlant = plant => {
     }
 }
 export const updatePlantActuator = (plant, field, value) => {
+    // console.log("UPDATE")
+    // console.log(plant)
+    // console.log("UPDATE")
     const { currentUser } = firebase.auth();
     return async dispatch => {
         if (plant.id) {
                 await firebase.database().ref(`users/${currentUser.uid}/Plant/${plant.id}/Actuators`).update({ [field]: value });
-                dispatch(setWholePlant(plant))
         }
     }
 }

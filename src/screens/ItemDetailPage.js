@@ -4,7 +4,7 @@ import { View, Text, Image, StyleSheet, ImageBackground, Switch, Button } from '
 import { ScrollView } from 'react-native-gesture-handler';
 
 import { connect } from 'react-redux';
-import { deletePlant, updatePlantActuator, watchEachPlant, setField, setWholePlant } from '../actions';
+import { deletePlant, updatePlantActuator, watchEachPlant } from '../actions';
 
 class ItemDetailPage extends React.Component {
 
@@ -18,17 +18,19 @@ class ItemDetailPage extends React.Component {
     componentDidMount() {
          const { navigation, watchEachPlant, setWholePlant } = this.props;
          const { eachItem } = navigation.state.params;
-        // //  console.log('-------------eachItem---------------')
-        // //  console.log(eachItem);
-        setWholePlant(eachItem);
+        //   console.log('------------- eachItem ---------------')
+        //   console.log(eachItem);
+        //   console.log('------------- eachItem ---------------')
+        // setWholePlant(eachItem);
         watchEachPlant(eachItem);
     }
 
 
     render() {
         const { newPlant, navigation, updatePlantActuator } = this.props;
-        console.log('-------------newPlant---------------')
-         console.log(newPlant)
+        // console.log('-------------newPlant---------------')
+        //  console.log(newPlant)
+        //  console.log('-------------newPlant---------------')
         return (
             <ScrollView style={[styles.containerAll, styles.border]}>
                 <Text style={[styles.NameStyle, styles.border2]}> {newPlant.Name} </Text>
@@ -156,32 +158,6 @@ const styles = StyleSheet.create({
 
 
 function mapStateToProps(state) {
-    // const { newPlant } = state;
-    // if (newPlant === null) {
-    //     return { newPlant }
-    // }
-
-    // const keys = Object.keys(newPlant);
-    // const plantsWithKeys = keys.map(id => {return { ...newPlant[id], id } })
-
-    //   console.log("PLANTA with key -------------------------------------------------------------:")
-    //  console.log(state.newplant)
-    //  console.log("PLANTA with key -------------------------------------------------------------:")
-
-    // return { newPlant: plantsWithKeys };
-    // const plant = state.newPlant;
-    // const key = Object.keys(plant);
-    // console.log("PLANTA -------------------------------------------------------------:")
-    // console.log(state.newPlant)
-    // console.log("PLANTA -------------------------------------------------------------:")
-    // console.log('Key: ')
-    // console.log(key)
-
-    // const plantWithKey = { ...plant[key], key}
-    // console.log("PLANTA with key -------------------------------------------------------------:")
-    // console.log(plantsWithKeys)
-    // console.log("PLANTA with key -------------------------------------------------------------:")
-
     return {
         newPlant: state.newPlant//plantWithKey//
     }
@@ -191,8 +167,6 @@ const mapDispatchToProps = {
     deletePlant,
     watchEachPlant,
     updatePlantActuator,
-    setField,
-    setWholePlant
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemDetailPage)
