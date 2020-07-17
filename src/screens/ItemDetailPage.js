@@ -28,9 +28,9 @@ class ItemDetailPage extends React.Component {
 
     render() {
         const { newPlant, navigation, updatePlantActuator } = this.props;
-        // console.log('-------------newPlant---------------')
-        //  console.log(newPlant)
-        //  console.log('-------------newPlant---------------')
+        console.log('-------------newPlant---------------')
+         console.log(newPlant)
+         console.log('-------------newPlant---------------')
         return (
             <ScrollView style={[styles.containerAll, styles.border]}>
                 <Text style={[styles.NameStyle, styles.border2]}> {newPlant.Name} </Text>
@@ -38,7 +38,7 @@ class ItemDetailPage extends React.Component {
                     <Image style={[styles.termoImage, styles.border]} source={require('../images/termo.png')} />
                     <View style={[{ flexDirection: 'column' }, { flex: 2 }]}>
                         <Text style={[styles.textStyle, { textAlign: 'left' }, styles.border]}> Temperatura</Text>
-                        <Text style={[styles.numberColumn, { textAlign: 'left' }, styles.border]}> {newPlant.Sensors.Temperature}°C </Text>
+                        <Text style={[styles.numberColumn, { textAlign: 'left' }, styles.border]}> {newPlant.Sensors.Temperature?newPlant.Sensors.Temperature:0}°C </Text>
                     </View>
                 </View>
                 <View style={[styles.containerHumidity, styles.border2]}>
@@ -78,11 +78,9 @@ class ItemDetailPage extends React.Component {
                 </View>
                 <View style={styles.button}>
                     <Button title="Deletar" color="#ff0000" onPress={async () => {
-                        const hasDeleted = await this.props.deletePlant(newPlant);
+                        await this.props.deletePlant(newPlant);
+                        navigation.goBack();
 
-                        if (hasDeleted) {
-                            navigation.goBack();
-                        }
                     }} />
                 </View>
             </ScrollView>
@@ -159,7 +157,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return {
-        newPlant: state.newPlant//plantWithKey//
+        newPlant:  state.newPlant//plantWithKey//
     }
 }
 

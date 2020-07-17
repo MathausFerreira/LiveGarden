@@ -21,34 +21,3 @@ export const watchPlants = () => {
     }
 }
 
-export const deletePlant = plant => {
-    return dispatch => {
-        return new Promise((resolve, reject) => {
-            Alert.alert('Deletar', `Deseja realmente deletar  ${plant.Name}`, [
-                {
-                    text: 'Não',
-                    onPress: () => { 
-                        resolve(false);
-                    },
-                    style: 'cancel'
-                },
-                {
-                    text: 'Sim',
-                    onPress: async () => { 
-                        const {currentUser} = firebase.auth();
-                        try{
-                            await firebase
-                            .database()
-                            .ref(`/users/${currentUser.uid}/Plant/${plant.id}`)
-                            .remove();
-                            resolve(true);
-                        } catch(e) {
-                            reject(e);
-                        }
-                    },
-                }
-            ], { cancelable: false }
-            )
-        })
-    }
-}

@@ -1,5 +1,7 @@
 import firebase from 'firebase';
 
+import { Alert } from 'react-native';
+
 export const SET_WHOLE_PLANT = 'SET_WHOLE_PLANT';
 export const setWholePlant = plant => ({
     type: SET_WHOLE_PLANT,
@@ -44,9 +46,6 @@ export const saveNewPlant = plant => {
     }
 }
 export const updatePlantActuator = (plant, field, value) => {
-    // console.log("UPDATE")
-    // console.log(plant)
-    // console.log("UPDATE")
     const { currentUser } = firebase.auth();
     return async dispatch => {
         if (plant.id) {
@@ -71,9 +70,40 @@ export const watchEachPlant = (plant) => {
 }
 
 function addID(plant, id){
-
     return  {...plant, ['id']: id }
-
 }
-// let plant2 = snapshot.val();
-// plant2 = {...plant,...plant2[id], id }
+
+
+export const deletePlant = (plant) => {
+    return dispatch => {
+        // return new Promise((resolve, reject) => {
+            console.log("IDD")
+            console.log(plant)
+            Alert.alert('Deletar', `Deseja realmente deletar  ${plant.Name}`, [
+                {
+                    text: 'Não',
+                    onPress: () => { 
+                        // resolve(false);
+                    },
+                    style: 'cancel'
+                },
+                {
+                    text: 'Sim',
+                    onPress: async () => { 
+                        const {currentUser} = firebase.auth();
+                        try{
+                            await firebase
+                            .database()
+                            .ref(`/users/${currentUser.uid}/Plant/${plant.id}`)
+                            .remove()
+                            resolve(true);
+                        } catch(e) {
+                            reject(e);
+                        }
+                    },
+                }
+            ], { cancelable: false }
+            )
+        // })
+    }
+}
