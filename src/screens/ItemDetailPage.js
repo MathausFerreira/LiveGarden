@@ -16,8 +16,8 @@ class ItemDetailPage extends React.Component {
     }
 
     componentDidMount() {
-         const { navigation, watchEachPlant, setWholePlant } = this.props;
-         const { eachItem } = navigation.state.params;
+        const { navigation, watchEachPlant, setWholePlant } = this.props;
+        const { eachItem } = navigation.state.params;
         //   console.log('------------- eachItem ---------------')
         //   console.log(eachItem);
         //   console.log('------------- eachItem ---------------')
@@ -29,8 +29,8 @@ class ItemDetailPage extends React.Component {
     render() {
         const { newPlant, navigation, updatePlantActuator } = this.props;
         console.log('-------------newPlant---------------')
-         console.log(newPlant)
-         console.log('-------------newPlant---------------')
+        console.log(newPlant)
+        console.log('-------------newPlant---------------')
         return (
             <ScrollView style={[styles.containerAll, styles.border]}>
                 <Text style={[styles.NameStyle, styles.border2]}> {newPlant.Name} </Text>
@@ -38,33 +38,51 @@ class ItemDetailPage extends React.Component {
                     <Image style={[styles.termoImage, styles.border]} source={require('../images/termo.png')} />
                     <View style={[{ flexDirection: 'column' }, { flex: 2 }]}>
                         <Text style={[styles.textStyle, { textAlign: 'left' }, styles.border]}> Temperatura</Text>
-                        <Text style={[styles.numberColumn, { textAlign: 'left' }, styles.border]}> {newPlant.Sensors.Temperature?newPlant.Sensors.Temperature:0}°C </Text>
+                        <Text style={[styles.numberColumn, { textAlign: 'left' }, styles.border]}> {newPlant.Sensors.Temperature ? newPlant.Sensors.Temperature : 0}°C </Text>
                     </View>
                 </View>
+
                 <View style={[styles.containerHumidity, styles.border2]}>
                     <ImageBackground style={[styles.humidityBox, styles.border]} source={require('../images/humidity.png')}>
                         <Text style={[styles.numberColumn, styles.textCenteredHumidity, styles.border]}> {newPlant.Sensors.Humidity}% </Text>
                     </ImageBackground>
-                    <View style={[styles.border, { flexDirection: 'column' }, { flex: 1 }]}>
-                        <Text style={[styles.textStyle, { textAlign: 'left' }, styles.border]}> Luz</Text>
-                        {this.state.isLoading ?
-                            <ActivityIndicator />
-                            : <Switch style={styles.border}
-                                value={newPlant.Actuators.Light}
-                                onValueChange={value => { updatePlantActuator(newPlant, 'Light', value) }} />
-                        }
-                        <Text style={[styles.textStyle, { textAlign: 'left' }, styles.border]}> Motor</Text>
-                        {this.state.isLoading ?
-                            <ActivityIndicator />
-                            : <Switch value={newPlant.Actuators.Motor}
-                             onValueChange={value => { updatePlantActuator(newPlant, 'Motor', value) }} />
-                        }
-                        <Text style={[styles.textStyle, { textAlign: 'left' }, styles.border]}> Bomba d'água</Text>
-                        {this.state.isLoading ?
-                            <ActivityIndicator />
-                            : <Switch value={newPlant.Actuators.Pump} 
-                            onValueChange={value => { updatePlantActuator(newPlant, 'Pump', value) }} />
-                        }
+
+                    <View style={[styles.border, { flex: 1 }]}>
+
+                        <View style={[styles.border, styles.LineActuator]}>
+                            <Text style={[styles.textStyle, styles.Actuator]}> Luz</Text>
+                            {this.state.isLoading ?
+                                <ActivityIndicator />
+                                : <View style={[styles.border, styles.LineActuator]}>
+                                    <Switch style={styles.switchbox}
+                                        value={newPlant.Actuators.Light}
+                                        onValueChange={value => { updatePlantActuator(newPlant, 'Light', value) }} />
+                                </View>
+                            }
+                        </View>
+
+                        <View style={[styles.border, styles.LineActuator]}>
+                            <Text style={[styles.textStyle, styles.Actuator]}> Motor</Text>
+                            {this.state.isLoading ?
+                                <ActivityIndicator />
+                                : <View style={[styles.border, styles.LineActuator]}>
+                                    <Switch style={styles.switchbox}
+                                        value={newPlant.Actuators.Motor}
+                                        onValueChange={value => { updatePlantActuator(newPlant, 'Motor', value) }} />
+                                </View>
+                            }
+                        </View>
+                        <View style={[styles.border, styles.LineActuator]}>
+                            <Text style={[styles.textStyle, styles.Actuator]}> Bomba</Text>
+                            {this.state.isLoading ?
+                                <ActivityIndicator />
+                                : <View style={[styles.border, styles.LineActuator]}>
+                                    <Switch style={styles.switchbox}
+                                        value={newPlant.Actuators.Pump}
+                                        onValueChange={value => { updatePlantActuator(newPlant, 'Pump', value) }} />
+                                </View>
+                            }
+                        </View>
                     </View>
                 </View>
                 <View style={[styles.containerLineNumbers, styles.border2]}>
@@ -95,24 +113,41 @@ const styles = StyleSheet.create({
         // borderWidth: 2,
     },
     border2: {
-        borderColor: '#983',
-        borderWidth: 2,
+        borderColor: '#71bab1',
+        borderWidth: 1,
     },
     button: {
         padding: 10,
     },
     containerAll: {
-        backgroundColor: '#e2f9ff',
+        backgroundColor: '#e2fffb',
     },
     containerLineNumbers: {
+        padding: 5,
         flexDirection: 'row',
         alignItems: 'center',
     },
     NameStyle: {
         fontSize: 30,
-        textAlign: 'center',
-        color: 'red',
+        textAlign: 'left',
+        color: '#2200f4',
         padding: 10,
+    },
+    LineActuator: {
+        flexDirection: 'row',
+        flex: 1,
+        alignItems: 'center'
+    },
+    Actuator: {
+        textAlign: 'left',
+        alignItems: 'center',
+        flex: 2
+    },
+    textStyle: {
+        justifyContent: "center",
+        flex: 1,
+        fontSize: 25,
+        color: '#c600ff',
     },
     numberColumn: {
         flex: 1,
@@ -123,15 +158,16 @@ const styles = StyleSheet.create({
     termoImage: {
         aspectRatio: 1,
         width: 115,
+        resizeMode: 'center'
     },
     containerHumidity: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
     },
     textCenteredHumidity: {
         position: 'absolute',
-        top: 95,
+        top: 85,
         left: 0,
         right: 60,
         bottom: 50,
@@ -139,25 +175,21 @@ const styles = StyleSheet.create({
     },
     humidityBox: {
         aspectRatio: 1,
-        width: 200,
+        width: 190,
     },
     switchbox: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    textStyle: {
-        justifyContent: "center",
-        flex: 1,
-        fontSize: 25,
-        color: 'green',
+        // flex: 2,
+        // alignItems: 'flex-start',
+        // borderColor: 'red',
+        // borderWidth: 2,
+        // justifyContent: "center",
     },
 })
 
 
 function mapStateToProps(state) {
     return {
-        newPlant:  state.newPlant//plantWithKey//
+        newPlant: state.newPlant//plantWithKey//
     }
 }
 

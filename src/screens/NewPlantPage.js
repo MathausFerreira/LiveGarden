@@ -31,7 +31,7 @@ class NewPlantPage extends React.Component {
             <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} >
                 <ScrollView style={styles.container}>
                     <View style={styles.viewLogo}>
-                        <Image style={styles.logo} source={require('../images/flower.png')} />
+                        <Image style={styles.logo} source={require('../images/Nova.png')} />
                     </View>
                     <FormRow>
                         <TextInput
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
 
     },
     container: {
-        paddingTop: 10,
+        paddingTop: 0,
         paddingBottom: 10,
         marginBottom: 20,
     },
@@ -132,12 +132,13 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
     },
     logo: {
-        aspectRatio: 1,
-        height: 130,
+        height: 224,
+        width: 156,
         borderWidth: 0,
+        resizeMode:'stretch'
     },
     viewLogo: {
-        padding: 30,
+        padding: 5,
         flexDirection: 'column',
         alignItems: 'center'
     },

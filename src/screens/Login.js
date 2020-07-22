@@ -116,7 +116,7 @@ class Login extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.viewLogo}>
-                    <Image style={styles.logo} source={require('../images/flower.png')} />
+                    <Image style={styles.logo} source={require('../images/Login.png')} />
                 </View>
                 <FormRow>
                     <TextInput style={styles.input} clearButtonMode='always' placeholder='User@mail.com.br' value={this.state.email} onChangeText={value => this.onChangeHandler('email', value)} keyboardType='email-address' autoCapitalize='none' />
@@ -136,14 +136,18 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         paddingBottom: 10,
         marginBottom: 20,
+        marginTop:20,
     },
     logo: {
-        aspectRatio: 1,
-        height: 130,
+        // aspectRatio: 2,
+        height: 224,
+        width: 156,
         borderWidth: 0,
+        resizeMode:'stretch'
     },
     viewLogo: {
-        padding: 30,
+        padding: 1,
+        height: 250,
         flexDirection: 'column',
         alignItems: 'center'
     },

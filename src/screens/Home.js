@@ -23,7 +23,9 @@ class Home extends React.Component {
                         navigation.navigate('ItemDetailPage', pageParams);
                     }} />
                 </View>
-                <Button title="Nova Planta" color="#5A9" onPress={() => { navigation.navigate('NewPlantPage') }} />
+                <View style={styles.actionButtonIcon}>
+                <Button title="Cadastrar Nova" color="#56da2e" onPress={() => { navigation.navigate('NewPlantPage') }} />
+                </View>
             </View>
         );
     }
@@ -36,13 +38,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    actionButtonIcon: {
+    actionButton: {
         padding: 10,
-        fontSize: 20,
-        height: 22,
-        color: 'white',
-        borderColor: 'black',
-        borderWidth: 10,
     },
 });
 
